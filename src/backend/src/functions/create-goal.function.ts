@@ -1,4 +1,4 @@
-import { db } from '../db'
+import { dbOrm } from '../db/client'
 import { goals } from '../db/schema'
 
 interface CreateGoalRequest {
@@ -7,7 +7,7 @@ interface CreateGoalRequest {
 }
 
 export async function createGoal ({ title, desiredWeeklyFrequency }: CreateGoalRequest) {
-  const insertResult = await db.insert(goals)
+  const insertResult = await dbOrm.insert(goals)
     .values({ title, desiredWeeklyFrequency })
     .returning()
 

@@ -1,9 +1,9 @@
 import fastify from 'fastify'
-import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod'
+import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { env } from '../env'
-import { createGoal } from '../functions/create-goal'
+import { createGoal } from '../functions/create-goal.function'
 
 
 const app = fastify()
