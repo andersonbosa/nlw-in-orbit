@@ -1,0 +1,41 @@
+name: Security issue report
+description: Create a report to help us improve security
+labels: ["security"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a security issue!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Describe the security issue
+      description: A clear and concise description of the security issue, including any potential vulnerabilities or risks.
+      placeholder: Explain the security issue in detail.
+    validations:
+      required: true
+  - type: textarea
+    id: repro-steps
+    attributes:
+      label: Steps to reproduce
+      description: Detailed steps to reproduce the security issue.
+      placeholder: |
+        1. Trigger the vulnerability by...
+        2. Perform additional actions like...
+        3. Observe the security issue.
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: macOS
+    validations:
+      required: false
+  - type: input
+    id: language-version
+    attributes:
+      label: Node version
+      placeholder: Node v16.14.2
+    validations:
+      required: false
