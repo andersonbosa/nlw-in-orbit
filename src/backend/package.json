@@ -7,7 +7,7 @@
     "dev": "tsx watch --env-file=.config/env/.env src/http/server.ts",
     "db-cli": "drizzle-kit",
     "db-studio": "drizzle-kit studio",
-    "db-migrate": "drizzle-kit migrate",
+    "db-migrate": "drizzle-kit generate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
