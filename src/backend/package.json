@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file=.config/env/.env src/http/server.ts",
-    "db-cli": "drizzle-kit",
-    "db-studio": "drizzle-kit studio",
-    "db-migrate": "drizzle-kit generate",
+    "db:seed": "tsx --env-file=.config/env/.env src/db/seed.ts",
+    "db:cli": "drizzle-kit",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit generate",
+    "biome:format": "biome format --write ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
