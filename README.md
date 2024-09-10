@@ -1,8 +1,8 @@
 
-[![Creative Commons](https://img.shields.io/badge/license-CC0_1.0-blue.svg?style=flat)](http://creativecommons.org/publicdomain/zero/1.0/)
-[![](https://img.shields.io/badge/contributions-WELCOME-green)](#)
-[![](https://img.shields.io/badge/made_with-LOVE-red)](#)
-
+<!-- [![Creative Commons](https://img.shields.io/badge/license-CC0_1.0-blue.svg?style=flat)](http://creativecommons.org/publicdomain/zero/1.0/) -->
+<!-- [![](https://img.shields.io/badge/contributions-WELCOME-green)](#) -->
+<!-- [![](https://img.shields.io/badge/made_with-LOVE-red)](#) -->
+[![Formatted with Biome](https://img.shields.io/badge/Formatted_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev/)
 
 ---
 <section align="center">
@@ -26,6 +26,7 @@
 
 The purpose of this repository is to be a `template ` I can use to start my projects. Feel free to use on your projects!
 
+- Figma: https://www.figma.com/community/file/1415093862269754302/nlw-pocket-js-in-orbit
 
 ## Getting Started
 

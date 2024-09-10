@@ -1,11 +1,13 @@
-import fastify from "fastify";
+import fastify from 'fastify'
+import { env } from '../env'
 
-const app = fastify();
+const app = fastify()
 
 app
   .listen({
-    port: 3333,
+    port: env.HTTP_PORT,
+    host: env.HTTP_HOST,
   })
-  .then((liveUrl) => {
+  .then(liveUrl => {
     console.log(`HTTP Server Running: "${liveUrl}"`)
   })
