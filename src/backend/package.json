@@ -7,6 +7,7 @@
     "dev": "tsx watch --env-file=.config/env/.env src/http/server.ts",
     "db-cli": "drizzle-kit",
     "db-studio": "drizzle-kit studio",
+    "db-migrate": "drizzle-kit migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,6 +21,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "fastify": "^4.28.1",
