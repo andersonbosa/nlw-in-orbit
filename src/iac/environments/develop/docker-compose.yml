@@ -1,0 +1,8 @@
+name: nlw-pocket
+
+services:
+  bit-postgresql:
+    image: bitnami/postgresql:13.16.0
+    ports:
+      - '5432:5432'
+    env_file: ./.env
