@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": false, // TOFIX: extension automatically loads the biome.json file from the workspace’s root directory. See https://biomejs.dev/reference/vscode/#configuration-resolution
+  "editor.formatOnSave": true, // TOFIX: extension automatically loads the biome.json file from the workspace’s root directory. See https://biomejs.dev/reference/vscode/#configuration-resolution
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },

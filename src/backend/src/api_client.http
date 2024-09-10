@@ -1,0 +1,17 @@
+### Function: Create Goal 200
+POST http://127.0.0.1:3000/api/goals
+Content-type: application/json
+
+{
+  "title": "Ler 10 páginas",
+  "desiredWeeklyFrequency": 3
+}
+
+### Function: Create Goal 500
+POST http://127.0.0.1:3000/api/goals
+Content-type: application/json
+
+{
+  "title": "Ler 10 páginas",
+  "desiredWeeklyFrequency": "string is invalid type"
+}

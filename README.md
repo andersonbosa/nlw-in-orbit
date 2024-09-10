@@ -24,7 +24,7 @@
 
 <!-- Write about what your project is succinct and objective -->
 
-The purpose of this repository is to be a `template ` I can use to start my projects. Feel free to use on your projects!
+TBD
 
 - Figma: https://www.figma.com/community/file/1415093862269754302/nlw-pocket-js-in-orbit
 
