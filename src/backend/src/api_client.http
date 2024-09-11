@@ -16,6 +16,14 @@ Content-type: application/json
   "desiredWeeklyFrequency": "string is invalid type"
 }
 
+### Function: Get Week Pending Goals 200
+GET http://127.0.0.1:3000/api/goals/get-pendings
+
 
 ### Function: Get Week Pending Goals 200
-GET http://127.0.0.1:3000/api/pending-goals
+POST http://127.0.0.1:3000/api/goals/get-completions
+Content-type: application/json
+
+{
+  "goalId": "t4fsxs9dp284afht3uuyt74q"
+}

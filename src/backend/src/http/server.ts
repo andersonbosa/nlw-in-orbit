@@ -5,6 +5,8 @@ import z from 'zod'
 import { env } from '../env'
 import { createGoal } from '../functions/create-goal.function'
 import { getWeekPendingGoals } from '../functions/get-week-pending-goals.function'
+import { createGoalCompletion } from '../functions/create-goal-completion.function'
+
 
 const app = fastify()
   .withTypeProvider<ZodTypeProvider>()
@@ -13,7 +15,7 @@ app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 app.post(
-  '/api/goals',
+  '/api/goals/create',
   {
     schema: {
       body: z.object({
@@ -24,19 +26,40 @@ app.post(
   },
   async (request) => {
     const { body } = request
-    await createGoal({
+    const { goal } = await createGoal({
       title: body.title,
       desiredWeeklyFrequency: body.desiredWeeklyFrequency,
     })
+    return {
+      data: goal
+    }
   }
 )
 
 app.get(
-  '/api/pending-goals',
+  '/api/goals/get-pendings',
   async () => {
     const { pendingGoals } = await getWeekPendingGoals()
     return {
-      pendingGoals
+      data: pendingGoals
+    }
+  }
+)
+
+app.post(
+  '/api/goals/get-completions',
+  {
+    schema: {
+      body: z.object({
+        goalId: z.string()
+      })
+    }
+  },
+  async (request) => {
+    const { goalId } = request.body
+    const { goalCompletion } = await createGoalCompletion({ goalId })
+    return {
+      data: goalCompletion
     }
   }
 )

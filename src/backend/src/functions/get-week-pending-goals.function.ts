@@ -1,12 +1,10 @@
 import { and, count, lte, gte, eq, sql } from 'drizzle-orm'
 
 import dayjs from 'dayjs'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 import { dbOrm } from '../db/client'
 import { goals, goalCompletions } from '../db/schema'
 
-dayjs.extend(weekOfYear)
 
 interface GetWeekPendingGoalsResponse {
   pendingGoals: {
