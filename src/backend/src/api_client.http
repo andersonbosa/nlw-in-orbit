@@ -15,3 +15,7 @@ Content-type: application/json
   "title": "Ler 10 páginas",
   "desiredWeeklyFrequency": "string is invalid type"
 }
+
+
+### Function: Get Week Pending Goals 200
+GET http://127.0.0.1:3000/api/pending-goals

@@ -4,7 +4,7 @@ import z from 'zod'
 
 import { env } from '../env'
 import { createGoal } from '../functions/create-goal.function'
-
+import { getWeekPendingGoals } from '../functions/get-week-pending-goals.function'
 
 const app = fastify()
   .withTypeProvider<ZodTypeProvider>()
@@ -28,6 +28,16 @@ app.post(
       title: body.title,
       desiredWeeklyFrequency: body.desiredWeeklyFrequency,
     })
+  }
+)
+
+app.get(
+  '/api/pending-goals',
+  async () => {
+    const { pendingGoals } = await getWeekPendingGoals()
+    return {
+      pendingGoals
+    }
   }
 )
 
