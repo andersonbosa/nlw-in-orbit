@@ -14,6 +14,13 @@ const app = fastify()
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
+app.get('/api/healthcheck', async () => {
+  return {
+    live: true,
+    when: new Date().toISOString(),
+  }
+})
+
 app.post(
   '/api/goals/create',
   {

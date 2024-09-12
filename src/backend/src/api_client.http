@@ -1,5 +1,9 @@
+### Function: Healthcheck
+GET http://127.0.0.1:3000/api/healthcheck
+
+
 ### Function: Create Goal 200
-POST http://127.0.0.1:3000/api/goals
+POST http://127.0.0.1:3000/api/goals/create
 Content-type: application/json
 
 {
@@ -7,14 +11,16 @@ Content-type: application/json
   "desiredWeeklyFrequency": 3
 }
 
+
 ### Function: Create Goal 500
-POST http://127.0.0.1:3000/api/goals
+POST http://127.0.0.1:3000/api/goals/create
 Content-type: application/json
 
 {
   "title": "Ler 10 páginas",
   "desiredWeeklyFrequency": "string is invalid type"
 }
+
 
 ### Function: Get Week Pending Goals 200
 GET http://127.0.0.1:3000/api/goals/get-pendings
