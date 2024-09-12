@@ -7,9 +7,9 @@ import { createGoal } from '../functions/create-goal.function'
 import { getWeekPendingGoals } from '../functions/get-week-pending-goals.function'
 import { createGoalCompletion } from '../functions/create-goal-completion.function'
 
-
-const app = fastify()
-  .withTypeProvider<ZodTypeProvider>()
+const app = fastify({
+  logger: true,
+}).withTypeProvider<ZodTypeProvider>()
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
