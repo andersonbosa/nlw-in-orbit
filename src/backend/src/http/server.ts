@@ -9,6 +9,7 @@ import { createGoalCompletionRoute } from '../routes/create-goal-completion.rout
 import { createGoalRoute } from '../routes/create-goal.route'
 import { getWeekPendingGoalsRoute } from '../routes/get-week-pending-goals.route'
 import { healthcheckRoute } from '../routes/healthcheck.route'
+import { getWeekSummaryRoute } from '../routes/get-week-summary.route'
 
 
 const appConfig = {
@@ -36,5 +37,6 @@ app.register(healthcheckRoute)
 app.register(createGoalRoute)
 app.register(createGoalCompletionRoute)
 app.register(getWeekPendingGoalsRoute)
+app.register(getWeekSummaryRoute)
 
 export { app }
