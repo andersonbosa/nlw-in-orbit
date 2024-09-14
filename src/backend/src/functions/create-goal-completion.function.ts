@@ -9,7 +9,7 @@ interface CreateGoalCompletionRequest {
   goalId: string
 }
 
-export async function createGoalCompletion ({
+export async function createGoalCompletion({
   goalId,
 }: CreateGoalCompletionRequest) {
   const firstDayOfWeek = dayjs().startOf('week').toDate()
@@ -36,7 +36,10 @@ export async function createGoalCompletion ({
     .with(goalCompletionCounts)
     .select({
       desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
-      completionCount: sql /* SQL */` COALESCE(${goalCompletionCounts.completionCount}, 0) `.mapWith(Number),
+      completionCount:
+        sql /* SQL */` COALESCE(${goalCompletionCounts.completionCount}, 0) `.mapWith(
+          Number
+        ),
     })
     .from(goals)
     .leftJoin(goalCompletionCounts, eq(goalCompletionCounts.goalId, goals.id))

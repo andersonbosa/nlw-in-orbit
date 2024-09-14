@@ -17,5 +17,7 @@ app
 
 Documentation: https://github.com/andersonbosa/nlw-in-orbit
 
+-----------------------------------------------------------
+
 HTTP Server Running: "${liveUrl}"`)
   })

@@ -5,7 +5,6 @@ import dayjs from 'dayjs'
 import { dbOrm } from '../db/client'
 import { goals, goalCompletions } from '../db/schema'
 
-
 interface GetWeekPendingGoalsResponse {
   pendingGoals: {
     id: string
@@ -16,39 +15,37 @@ interface GetWeekPendingGoalsResponse {
   }[]
 }
 
-export async function getWeekPendingGoals (): Promise<GetWeekPendingGoalsResponse> {
+export async function getWeekPendingGoals(): Promise<GetWeekPendingGoalsResponse> {
   const lastDayOfWeek = dayjs().endOf('week').toDate()
   const firstDayOfWeek = dayjs().startOf('week').toDate()
 
-  const goalsCreatedUpToWeek = dbOrm.$with('goals_created_up_to_week')
-    .as(
-      dbOrm
-        .select({
-          id: goals.id,
-          title: goals.title,
-          desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
-          createdAt: goals.createdAt,
-        })
-        .from(goals)
-        .where(lte(goals.createdAt, lastDayOfWeek))
-    )
+  const goalsCreatedUpToWeek = dbOrm.$with('goals_created_up_to_week').as(
+    dbOrm
+      .select({
+        id: goals.id,
+        title: goals.title,
+        desiredWeeklyFrequency: goals.desiredWeeklyFrequency,
+        createdAt: goals.createdAt,
+      })
+      .from(goals)
+      .where(lte(goals.createdAt, lastDayOfWeek))
+  )
 
-  const goalCompletionCounts = dbOrm.$with('goal_completion_counts')
-    .as(
-      dbOrm
-        .select({
-          goalId: goalCompletions.goalId,
-          completionCount: count(goalCompletions.id).as('completionCount')
-        })
-        .from(goalCompletions)
-        .where(
-          and(
-            gte(goalCompletions.createdAt, firstDayOfWeek),
-            lte(goalCompletions.createdAt, lastDayOfWeek),
-          )
+  const goalCompletionCounts = dbOrm.$with('goal_completion_counts').as(
+    dbOrm
+      .select({
+        goalId: goalCompletions.goalId,
+        completionCount: count(goalCompletions.id).as('completionCount'),
+      })
+      .from(goalCompletions)
+      .where(
+        and(
+          gte(goalCompletions.createdAt, firstDayOfWeek),
+          lte(goalCompletions.createdAt, lastDayOfWeek)
         )
-        .groupBy(goalCompletions.goalId)
-    )
+      )
+      .groupBy(goalCompletions.goalId)
+  )
 
   const pendingGoals = await dbOrm
     .with(goalsCreatedUpToWeek, goalCompletionCounts)
@@ -57,7 +54,10 @@ export async function getWeekPendingGoals (): Promise<GetWeekPendingGoalsRespons
       title: goalsCreatedUpToWeek.title,
       desiredWeeklyFrequency: goalsCreatedUpToWeek.desiredWeeklyFrequency,
       createdAt: goalsCreatedUpToWeek.createdAt,
-      completionCount: sql/* SQL */` COALESCE(${goalCompletionCounts.completionCount}, 0) `.mapWith(Number)
+      completionCount:
+        sql /* SQL */` COALESCE(${goalCompletionCounts.completionCount}, 0) `.mapWith(
+          Number
+        ),
     })
     .from(goalsCreatedUpToWeek)
     .leftJoin(
@@ -66,6 +66,6 @@ export async function getWeekPendingGoals (): Promise<GetWeekPendingGoalsRespons
     )
 
   return {
-    pendingGoals
+    pendingGoals,
   }
 }
