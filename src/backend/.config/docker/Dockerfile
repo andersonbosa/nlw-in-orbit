@@ -16,12 +16,13 @@ RUN apk update && apk add --upgrade --no-cache \
   curl 
 
 FROM nodejs_base AS runner
+
 ARG _USER=node
 
 WORKDIR /home/node/app
 COPY . .
 RUN npm install
-RUN npm i -g pm2
+RUN npm install -g pm2
 
 USER $_USER
-ENTRYPOINT [ "sh", "./.config/docker/entrypoint.production.sh" ]
+ENTRYPOINT [ "sh", "./.config/docker/entrypoint.development.sh" ]
