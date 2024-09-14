@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { goalCompletions, goals } from './schema'
 import { dbOrm, dbClient } from './client'
 
-async function seed () {
+async function seed() {
   await dbOrm.delete(goalCompletions)
   await dbOrm.delete(goals)
 
@@ -23,7 +23,6 @@ async function seed () {
   ])
 }
 
-seed()
-  .finally(() => {
-    dbClient.end()
-  })
+seed().finally(() => {
+  dbClient.end()
+})
