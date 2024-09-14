@@ -1,14 +1,14 @@
 import fastify from 'fastify'
 import {
+  type ZodTypeProvider,
   serializerCompiler,
   validatorCompiler,
-  type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import z from 'zod'
 
-import { createGoal } from '../functions/create-goal.function'
-import { getWeekPendingGoals } from '../functions/get-week-pending-goals.function'
-import { createGoalCompletion } from '../functions/create-goal-completion.function'
+import { createGoalRoute } from '../routes/create-goal.route'
+import { healthcheckRoute } from '../routes/healthcheck.route'
+import { createGoalCompletionRoute } from '../routes/create-goal-completion.route'
+import { getWeekPendingGoalsRoute } from '../routes/get-week-pending-goals.route'
 
 const app = fastify({
   logger: true,
@@ -17,58 +17,10 @@ const app = fastify({
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-app.get('/api/healthcheck', async () => {
-  return {
-    live: true,
-    when: new Date().toISOString(),
-  }
-})
+app.register(healthcheckRoute)
+app.register(createGoalRoute)
+app.register(createGoalCompletionRoute)
+app.register(getWeekPendingGoalsRoute)
 
-app.post(
-  '/api/goals/create',
-  {
-    schema: {
-      body: z.object({
-        title: z.string(),
-        desiredWeeklyFrequency: z.number().int().min(1).max(7),
-      }),
-    },
-  },
-  async request => {
-    const { body } = request
-    const { goal } = await createGoal({
-      title: body.title,
-      desiredWeeklyFrequency: body.desiredWeeklyFrequency,
-    })
-    return {
-      data: goal,
-    }
-  }
-)
-
-app.get('/api/goals/get-pendings', async () => {
-  const { pendingGoals } = await getWeekPendingGoals()
-  return {
-    data: pendingGoals,
-  }
-})
-
-app.post(
-  '/api/goals/get-completions',
-  {
-    schema: {
-      body: z.object({
-        goalId: z.string(),
-      }),
-    },
-  },
-  async request => {
-    const { goalId } = request.body
-    const { goalCompletion } = await createGoalCompletion({ goalId })
-    return {
-      data: goalCompletion,
-    }
-  }
-)
 
 export { app }
