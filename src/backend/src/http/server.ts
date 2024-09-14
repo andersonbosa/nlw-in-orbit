@@ -1,4 +1,5 @@
 import fastify from 'fastify'
+import fastifyCors from '@fastify/cors'
 import {
   type ZodTypeProvider,
   serializerCompiler,
@@ -29,6 +30,10 @@ const appConfig = {
 
 const app = fastify(appConfig)
   .withTypeProvider<ZodTypeProvider>()
+
+app.register(fastifyCors, {
+  origin: process.env.HTTP_CORS_POLICY || '*'
+})
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
