@@ -38,5 +38,10 @@
 		"fastify-type-provider-zod": "^2.0.0",
 		"postgres": "^3.4.4",
 		"zod": "^3.23.8"
+	},
+	"overrides": {
+		"artillery": {
+			"axios": "^0.28.0"
+		}
 	}
 }
