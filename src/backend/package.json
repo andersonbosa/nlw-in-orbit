@@ -6,7 +6,7 @@
 	"author": "Anderson Bosa",
 	"license": "ISC",
 	"scripts": {
-		"dev": "tsx watch --env-file=.config/env/.env src/index.ts",
+		"dev": "tsx watch --inspect --env-file=.config/env/.env src/index.ts",
 		"db:seed": "tsx --env-file=.config/env/.env src/db/seed.ts",
 		"db:studio": "drizzle-kit studio",
 		"db:migrate": "drizzle-kit migrate",

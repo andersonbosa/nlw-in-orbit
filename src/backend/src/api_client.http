@@ -26,12 +26,13 @@ Content-type: application/json
 GET http://127.0.0.1:3000/api/goals/get-pendings
 
 
+
 ### Function: Get Week Pending Goals 200 (valid id)
 POST http://127.0.0.1:3000/api/goals/get-completions
 Content-type: application/json
 
 {
-  "goalId": "neie5stx6hbye8qfow9j6lwp"
+  "goalId": "zwwnpb7erap81aluzeilvpbx"
 }
 
 ### Function: Get Week Pending Goals 200 (invalid id)
