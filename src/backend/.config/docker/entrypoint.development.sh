@@ -16,8 +16,8 @@ ENVIRONMENT: ${NODE_ENV:-development}
 
 EOF
 
-echo "INFO: Running 'npm install' "
-npm install
+# echo "INFO: Running 'npm install' "
+# npm install
 
 echo "INFO: Running 'npm run db:setup' "
 npm run db:setup

@@ -5,6 +5,9 @@
 	"keywords": [],
 	"author": "Anderson Bosa",
 	"license": "ISC",
+	"engines": {
+		"node": ">=20.14.x"
+	},
 	"scripts": {
 		"start:dev": "tsx watch --inspect --env-file=.config/env/.env src/index.ts",
 		"db:seed": "tsx --env-file=.config/env/.env src/db/seed.ts",
