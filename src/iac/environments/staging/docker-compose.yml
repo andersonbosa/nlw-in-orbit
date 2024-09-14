@@ -5,7 +5,7 @@ services:
   backend:
     build:
       context: ./../../../backend
-      dockerfile: .config/docker/Dockerfile.dev
+      dockerfile: .config/docker/Dockerfile
     # env_file: ./../../../backend/.config/env/.env
     environment:
       - HTTP_PORT=3000
@@ -18,7 +18,7 @@ services:
       # Anonymous volume to prevent the node_modules from being overwritten in the host:
       - /home/node/app/node_modules
     networks:
-      - pocket-net-dev
+      - pocket-net-stag
     depends_on:
       postgresql:
         condition: service_healthy
@@ -35,7 +35,7 @@ services:
       - '5432:5432'
     env_file: ./.env
     networks:
-      - pocket-net-dev
+      - pocket-net-stag
     healthcheck:
       test: pg_isready --host=127.0.0.1 --port=5432 --dbname=inorbit --username=docker
       start_period: '5s'
@@ -43,11 +43,11 @@ services:
       timeout: '5s'
       retries: 5
     # volumes:
-    #   - pocket_development_data:/bitnami/postgresql
+    #   - pocket_staging_data:/bitnami/postgresql
 
 volumes:
-  pocket_development_data:
+  pocket_staging_data:
 
 networks:
-  pocket-net-dev:
+  pocket-net-stag:
     external: true
