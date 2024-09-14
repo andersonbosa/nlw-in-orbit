@@ -16,8 +16,8 @@ interface GetWeekPendingGoalsResponse {
 }
 
 export async function getWeekPendingGoalsFunction(): Promise<GetWeekPendingGoalsResponse> {
-  const lastDayOfWeek = dayjs().endOf('week').toDate()
   const firstDayOfWeek = dayjs().startOf('week').toDate()
+  const lastDayOfWeek = dayjs().endOf('week').toDate()
 
   const goalsCreatedUpToWeek = dbOrm.$with('goals_created_up_to_week').as(
     dbOrm
