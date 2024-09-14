@@ -3,7 +3,7 @@ import { and, count, lte, gte, eq, sql } from 'drizzle-orm'
 import dayjs from 'dayjs'
 
 import { dbOrm } from '../db/client'
-import { goals, goalCompletions } from '../db/schema'
+import { goals, goalsCompletions } from '../db/schema'
 
 interface GetWeekPendingGoalsResponse {
   pendingGoals: {
@@ -34,17 +34,17 @@ export async function getWeekPendingGoalsFunction(): Promise<GetWeekPendingGoals
   const goalCompletionCounts = dbOrm.$with('goal_completion_counts').as(
     dbOrm
       .select({
-        goalId: goalCompletions.goalId,
-        completionCount: count(goalCompletions.id).as('completionCount'),
+        goalId: goalsCompletions.goalId,
+        completionCount: count(goalsCompletions.id).as('completionCount'),
       })
-      .from(goalCompletions)
+      .from(goalsCompletions)
       .where(
         and(
-          gte(goalCompletions.createdAt, firstDayOfWeek),
-          lte(goalCompletions.createdAt, lastDayOfWeek)
+          gte(goalsCompletions.createdAt, firstDayOfWeek),
+          lte(goalsCompletions.createdAt, lastDayOfWeek)
         )
       )
-      .groupBy(goalCompletions.goalId)
+      .groupBy(goalsCompletions.goalId)
   )
 
   const pendingGoals = await dbOrm

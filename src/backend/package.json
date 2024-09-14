@@ -11,7 +11,7 @@
 		"db:studio": "drizzle-kit studio",
 		"db:migrate": "drizzle-kit migrate",
 		"db:generate-migrations": "drizzle-kit generate",
-    "db:setup": "npm run db:migrate && npm run db:seed",
+    "db:setup": "npm run db:generate-migrations && npm run db:migrate && npm run db:seed",
 		"lint": "biome format --write ./src",
 		"test:stress": "artillery run artillery/*",
 		"test:fuzzing": "   ",

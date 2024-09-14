@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { sql } from 'drizzle-orm'
 
 import { dbOrm } from '../db/client'
-import { goalCompletions, goals } from '../db/schema'
+import { goalsCompletions, goals } from '../db/schema'
 
 interface CreateGoalCompletionRequest {
   goalId: string
@@ -18,18 +18,18 @@ export async function createGoalCompletionFunction({
   const goalCompletionCounts = dbOrm.$with('goal_completion_counts').as(
     dbOrm
       .select({
-        goalId: goalCompletions.goalId,
-        completionCount: count(goalCompletions.id).as('completionCount'),
+        goalId: goalsCompletions.goalId,
+        completionCount: count(goalsCompletions.id).as('completionCount'),
       })
-      .from(goalCompletions)
+      .from(goalsCompletions)
       .where(
         and(
-          gte(goalCompletions.createdAt, firstDayOfWeek),
-          lte(goalCompletions.createdAt, lastDayOfWeek),
-          eq(goalCompletions.goalId, goalId)
+          gte(goalsCompletions.createdAt, firstDayOfWeek),
+          lte(goalsCompletions.createdAt, lastDayOfWeek),
+          eq(goalsCompletions.goalId, goalId)
         )
       )
-      .groupBy(goalCompletions.goalId)
+      .groupBy(goalsCompletions.goalId)
   )
 
   const result = await dbOrm
@@ -53,7 +53,7 @@ export async function createGoalCompletionFunction({
   }
 
   const insertResult = await dbOrm
-    .insert(goalCompletions)
+    .insert(goalsCompletions)
     .values({ goalId })
     .returning()
 
