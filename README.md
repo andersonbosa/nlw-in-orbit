@@ -6,7 +6,7 @@
 
 ---
 <section align="center">
-  <img src="docs/assets/images/banner.svg" title="Project banner" alt="Project banner" />
+  <img src=".github/banner.svg" title="Project banner" alt="Project banner" />
   <br>
   <br>
 
