@@ -1,36 +1,39 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "tsx watch --env-file=.config/env/.env src/http/server.ts",
-    "db:seed": "tsx --env-file=.config/env/.env src/db/seed.ts",
-    "db:cli": "drizzle-kit",
-    "db:studio": "drizzle-kit studio",
-    "db:migrate": "drizzle-kit migrate",
-    "db:generate-migrations": "drizzle-kit generate",
-    "biome:format": "biome format --write ./src",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "@types/node": "^22.5.4",
-    "drizzle-kit": "^0.24.2",
-    "tsx": "^4.19.0",
-    "typescript": "^5.6.2"
-  },
-  "dependencies": {
-    "@paralleldrive/cuid2": "^2.2.2",
-    "dayjs": "^1.11.13",
-    "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.33.0",
-    "fastify": "^4.28.1",
-    "fastify-type-provider-zod": "^2.0.0",
-    "postgres": "^3.4.4",
-    "zod": "^3.23.8"
-  }
+	"name": "@nlw-in-orbit/backend",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [],
+	"author": "Anderson Bosa",
+	"license": "ISC",
+	"scripts": {
+		"dev": "tsx watch --env-file=.config/env/.env src/index.ts",
+		"db:seed": "tsx --env-file=.config/env/.env src/db/seed.ts",
+		"db:studio": "source .config/env/.env && drizzle-kit studio",
+		"db:migrate": "source .config/env/.env && drizzle-kit migrate",
+		"db:generate-migrations": "drizzle-kit generate",
+		"biome:format": "biome format --write ./src",
+		"test:stress": "artillery run artillery/*",
+		"test:fuzzing": "   ",
+		"test:unit": "tsx --test --env-file=.config/env/.env src/**/*.test.ts"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/node": "^22.5.4",
+		"@types/supertest": "^6.0.2",
+		"artillery": "^2.0.20",
+		"drizzle-kit": "^0.24.2",
+		"supertest": "^7.0.0",
+		"tsx": "^4.19.0",
+		"typescript": "^5.6.2"
+	},
+	"dependencies": {
+		"@paralleldrive/cuid2": "^2.2.2",
+		"dayjs": "^1.11.13",
+		"dotenv": "^16.4.5",
+		"drizzle-orm": "^0.33.0",
+		"fastify": "^4.28.1",
+		"fastify-type-provider-zod": "^2.0.0",
+		"postgres": "^3.4.4",
+		"zod": "^3.23.8"
+	}
 }
