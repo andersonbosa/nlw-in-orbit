@@ -8,9 +8,10 @@
 	"scripts": {
 		"dev": "tsx watch --env-file=.config/env/.env src/index.ts",
 		"db:seed": "tsx --env-file=.config/env/.env src/db/seed.ts",
-		"db:studio": "source .config/env/.env && drizzle-kit studio",
-		"db:migrate": "source .config/env/.env && drizzle-kit migrate",
+		"db:studio": "drizzle-kit studio",
+		"db:migrate": "drizzle-kit migrate",
 		"db:generate-migrations": "drizzle-kit generate",
+    "db:setup": "npm run db:migrate && npm run db:seed",
 		"lint": "biome format --write ./src",
 		"test:stress": "artillery run artillery/*",
 		"test:fuzzing": "   ",

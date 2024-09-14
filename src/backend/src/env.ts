@@ -1,5 +1,5 @@
-import { configDotenv } from 'dotenv'
-configDotenv({ path: '../.config/env/.env' })
+import { config } from 'dotenv'
+config({ path: '.config/env/.env', debug: true })
 
 import z from 'zod'
 
