@@ -1,5 +1,5 @@
 import { DialogTrigger } from '@radix-ui/react-dialog'
-import { CheckCircle2, Plus } from 'lucide-react'
+import { CheckCircle2, Circle, Plus } from 'lucide-react'
 
 import { Button } from '../ui/button'
 import { InOrbitIcon } from '../in-orbit-logo'
@@ -103,7 +103,7 @@ export function Summary() {
                 </h3>{' '}
                 <ul className="flex flex-col gap-3">
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-pink-500 cursor-pointer" />
+                    <Circle className="size-4 text-pink-500 cursor-pointer" />
                     <span className="text-zinc-400 text-sm">
                       Você completou "<span>Acordar cedo</span>" às
                       <span>08:13h</span>
@@ -114,7 +114,7 @@ export function Summary() {
                   </li>
 
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-pink-500 cursor-pointer" />
+                    <Circle className="size-4 text-pink-500 cursor-pointer" />
                     <span className="text-zinc-400 text-sm">
                       Você completou "<span>Acordar cedo</span>" às
                       <span>08:13h</span>
