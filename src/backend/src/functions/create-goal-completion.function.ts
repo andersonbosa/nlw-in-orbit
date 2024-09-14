@@ -9,7 +9,7 @@ interface CreateGoalCompletionRequest {
   goalId: string
 }
 
-export async function createGoalCompletionFunction({
+export async function createGoalCompletionFunction ({
   goalId,
 }: CreateGoalCompletionRequest) {
   const firstDayOfWeek = dayjs().startOf('week').toDate()
@@ -45,6 +45,10 @@ export async function createGoalCompletionFunction({
     .leftJoin(goalCompletionCounts, eq(goalCompletionCounts.goalId, goals.id))
     .where(eq(goals.id, goalId))
     .limit(1)
+
+  if (!result.length) {
+    throw new Error('Goal not found!')
+  }
 
   const { completionCount, desiredWeeklyFrequency } = result[0]
 
