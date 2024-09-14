@@ -1,8 +1,37 @@
 name: nlw-pocket
 
 services:
-  bit-postgresql:
+
+  # backend:
+  #   build:
+  #     context: ./../../../backend
+  #     dockerfile: .config/docker/Dockerfile
+  #   env_file: ./../../../backend/.config/env/.env
+  #   environment:
+  #     - HTTP_HOST=0.0.0.0
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./../../../backend:/home/node/app
+  #     - /home/node/app/node_modules  # Anonymous volume to prevent the node_modles from being overwritten in the host
+  #   depends_on:
+  #     - postgresql
+  #   networks:
+  #     - pocket-net
+
+  postgresql:
     image: bitnami/postgresql:13.16.0
     ports:
       - '5432:5432'
     env_file: ./.env
+    networks:
+      - pocket-net
+    volumes:
+    - development_data:/bitnami/postgresql
+
+volumes:
+  development_data:
+
+networks:
+  pocket-net:
+    external: true
