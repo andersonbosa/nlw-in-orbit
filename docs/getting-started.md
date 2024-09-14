@@ -26,4 +26,4 @@ TBD
 
 
 <!-- Footnotes -->
-[1]: https://github.com/andersonbosa/dothub
+[1]: https://github.com/andersonbosa/nlw-in-orbit

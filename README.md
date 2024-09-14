@@ -37,7 +37,7 @@ TBD
 
 ### Contribution
 
-Your contributions and suggestions are hearty ♥  welcome. [See here the contribution guidelines.](CONTRIBUTING.md). Please, report bugs or security issues via [issues page](https://github.com/andersonbosa/dothub/issues).
+Your contributions and suggestions are hearty ♥  welcome. [See here the contribution guidelines.](CONTRIBUTING.md). Please, report bugs or security issues via [issues page](https://github.com/andersonbosa/nlw-in-orbit/issues).
 
 
 ### License
@@ -47,6 +47,6 @@ This work is licensed under [Public Domain License](LICENSE.md).
 ---
 
 <h4>  
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/andersonbosa/dothub?style=social">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/andersonbosa/nlw-in-orbit?style=social">
   | Did you like the repository? Give it a star! 😁
 </h4>
