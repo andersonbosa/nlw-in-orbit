@@ -1,4 +1,5 @@
-import { CreateGoal } from '../components/create-goal'
+import { CreateGoalModal } from '../components/create-goal-modal'
+import { EmptyGoals } from '../components/empty-goals'
 import { Summary } from '../components/summary'
 import { Dialog } from '../components/ui/dialog'
 
@@ -7,7 +8,7 @@ export function HomeView() {
     <Dialog>
       {/* <EmptyGoals /> */}
       <Summary />
-      <CreateGoal />
+      <CreateGoalModal />
     </Dialog>
   )
 }

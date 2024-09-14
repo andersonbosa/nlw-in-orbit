@@ -15,7 +15,7 @@ import {
   RadioGroupItem,
 } from '../ui/radio-group'
 
-export function CreateGoal() {
+export function CreateGoalModal() {
   return (
     <DialogContent>
       <div className="flex flex-col gap-6 h-full">
