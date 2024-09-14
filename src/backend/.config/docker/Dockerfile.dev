@@ -1,15 +1,34 @@
-FROM node:20-alpine
+FROM alpine:3.20.3
 
-RUN apk add bash curl
+ARG _USER=node
+ARG _HOME=/home/$_USER
+
+RUN apk update && apk add --upgrade --no-cache git \
+  ca-certificates \
+  openjdk11 \
+  bash \
+  curl \
+  wget \
+  nodejs \
+  npm \
+  procps \
+  ranger
+
+RUN npm i -g npx npm
+
+RUN addgroup -S docker
+RUN adduser \
+  --disabled-password \
+  --gecos "" \
+  --home $_HOME \
+  --ingroup docker \
+  $_USER
 
 WORKDIR /home/node/app
 
-COPY package*.json ./
-
+COPY . .
 RUN npm install
 
-COPY . .
+USER $_USER
 
-CMD ["npm", "run", "dev"]
-
-USER node
+ENTRYPOINT [ "sh", "./.config/docker/entrypoint.development.sh" ]

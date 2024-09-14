@@ -2,22 +2,32 @@ name: nlw-pocket
 
 services:
 
-  # backend:
-  #   build:
-  #     context: ./../../../backend
-  #     dockerfile: .config/docker/Dockerfile
-  #   env_file: ./../../../backend/.config/env/.env
-  #   environment:
-  #     - HTTP_HOST=0.0.0.0
-  #   ports:
-  #     - '3000:3000'
-  #   volumes:
-  #     - ./../../../backend:/home/node/app
-  #     - /home/node/app/node_modules  # Anonymous volume to prevent the node_modles from being overwritten in the host
-  #   depends_on:
-  #     - postgresql
-  #   networks:
-  #     - pocket-net
+  backend:
+    build:
+      context: ./../../../backend
+      dockerfile: .config/docker/Dockerfile.dev
+    # env_file: ./../../../backend/.config/env/.env
+    environment:
+      - HTTP_PORT=3000
+      - HTTP_HOST=0.0.0.0
+      - DATABASE_URL=postgresql://docker:docker@postgresql:5432/inorbit
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./../../../backend:/home/node/app
+      # Anonymous volume to prevent the node_modles from being overwritten in the host:
+      - /home/node/app/node_modules
+    networks:
+      - pocket-net
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    healthcheck:
+      test: curl "http://$$HTTP_HOST:$$HTTP_PORT/api/healthcheck"
+      start_period: '5s'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
 
   postgresql:
     image: bitnami/postgresql:13.16.0
@@ -26,11 +36,17 @@ services:
     env_file: ./.env
     networks:
       - pocket-net
+    healthcheck:
+      test: pg_isready --host=127.0.0.1 --port=5432 --dbname=inorbit --username=docker
+      start_period: '5s'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
     # volumes:
-    #   - development_data:/bitnami/postgresql
+    #   - pocket_development_data:/bitnami/postgresql
 
 volumes:
-  development_data:
+  pocket_development_data:
 
 networks:
   pocket-net:
