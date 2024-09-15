@@ -57,7 +57,11 @@ export function Summary() {
           ]
             .slice(0, 6)
             .map(goal => (
-              <OutlineButton key={goal.label}>
+              <OutlineButton
+                key={goal.label.concat(
+                  Math.floor(Math.random() * 1e5).toString()
+                )}
+              >
                 <Plus className="size-4 text-zinc-600" />
                 {goal.label}
               </OutlineButton>
