@@ -55,6 +55,7 @@ export async function getWeekSummaryFunction(): Promise<GetWeekSummaryFunctionRe
           lte(goalsCompletions.createdAt, lastDayOfWeek)
         )
       )
+      .orderBy(desc(goalsCompletions.createdAt))
   )
 
   const goalsCompletedByWeedDay = dbOrm.$with('goals_completed_by_weed_day').as(
