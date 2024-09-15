@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { count, gte, lte, and, eq, sql } from 'drizzle-orm'
+import { count, gte, lte, and, eq, sql, desc } from 'drizzle-orm'
 
 import { dbOrm } from '../db/client'
 import { goals, goalsCompletions } from '../db/schema'
@@ -73,6 +73,7 @@ export async function getWeekSummaryFunction(): Promise<GetWeekSummaryFunctionRe
       })
       .from(goalsCompletedInWeek)
       .groupBy(goalsCompletedInWeek.completedAtDate)
+      .orderBy(desc(goalsCompletedInWeek.completedAtDate))
   )
 
   const result = await dbOrm

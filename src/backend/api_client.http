@@ -32,7 +32,7 @@ POST http://127.0.0.1:3000/api/goals/get-completions
 Content-type: application/json
 
 {
-  "goalId": "zwwnpb7erap81aluzeilvpbx"
+  "goalId": "vl350xc8umuetjgru08q0yh5"
 }
 
 ### Function: Get Week Pending Goals 200 (invalid id)
