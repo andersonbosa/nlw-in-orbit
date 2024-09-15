@@ -15,7 +15,7 @@ interface GetWeekPendingGoalsResponse {
   }[]
 }
 
-export async function getWeekPendingGoalsFunction (): Promise<GetWeekPendingGoalsResponse> {
+export async function getWeekPendingGoalsFunction(): Promise<GetWeekPendingGoalsResponse> {
   const firstDayOfWeek = dayjs().startOf('week').toDate()
   const lastDayOfWeek = dayjs().endOf('week').toDate()
 
