@@ -1,27 +1,126 @@
 import { DialogTrigger } from '@radix-ui/react-dialog'
 import { CheckCircle2, Circle, Plus } from 'lucide-react'
 
-import { Button } from '../ui/button'
+import type { GoalPerDayType, GoalsPerDayType, SummaryData } from '../../@types'
 import { InOrbitIcon } from '../in-orbit-logo'
+import { Button } from '../ui/button'
 import { Progress, ProgressIndicator } from '../ui/progress-bar'
 import { Separator } from '../ui/separator'
-import { OutlineButton } from '../ui/outline-button'
-import type { SummaryData } from '../../@types'
+
+import dayjs from 'dayjs'
+import ptBR from 'dayjs/locale/pt-br'
+import { PendingGoals } from '../pending-goals'
+
+dayjs.locale(ptBR)
+
+const GoalItem = ({
+  completed,
+  title,
+  completedAt,
+  onUndo,
+}: {
+  completed: boolean
+  title: string
+  completedAt: string | null
+  onUndo: () => void
+}) => {
+  const Icon = completed ? CheckCircle2 : Circle
+  const completedTime = dayjs(completedAt).format('HH:mm[h]')
+
+  return (
+    <>
+      <li className="flex items-center gap-2">
+        <Icon className="size-4 text-pink-500 cursor-pointer" />
+        <span className="text-zinc-400 text-sm">
+          Você completou "<span>{title}</span>"{' '}
+          {completedAt && (
+            <>
+              às <span>{completedTime}</span>
+            </>
+          )}
+        </span>
+        <button
+          type="button"
+          onClick={onUndo}
+          className="text-zinc-500 text-sm underline cursor-pointer"
+        >
+          Desfazer
+        </button>
+      </li>
+      {/* <li className="flex items-center gap-2">
+        <CheckCircle2 className="size-4 text-pink-500 cursor-pointer" />
+        <span className="text-zinc-400 text-sm">
+          Você completou "<span>Acordar cedo</span>" às
+          <span>08:13h</span>
+        </span>
+        <span className="text-zinc-500 text-sm underline cursor-pointer">
+          Desfazer
+        </span>
+      </li> */}
+    </>
+  )
+}
+
+const DaySummary = ({
+  date,
+  goals,
+  onUndo,
+}: {
+  date: string
+  goals: GoalPerDayType[]
+  onUndo: () => void
+}) => {
+  const weekDay = dayjs(date).format('dddd')
+  const formattedDate = dayjs(date).format('D[ de ]MMMM')
+  return (
+    <>
+      <div className="flex flex-col gap-4">
+        <h3 className="font-medium ">
+          <span className="capitalize">{weekDay}</span>{' '}
+          <span className="text-zinc-400 text-xs ">({formattedDate})</span>
+        </h3>{' '}
+        <ul className="flex flex-col gap-3">
+          {goals.map((goal: GoalPerDayType, index) => (
+            <GoalItem
+              key={`${index}__${goal.id}`}
+              title={goal.title}
+              completedAt={goal.completedAt}
+              completed={true}
+              onUndo={onUndo}
+            />
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
 
 interface SummaryProps {
   summaryData: SummaryData
 }
 
 export function Summary({ summaryData }: SummaryProps) {
+  if (!summaryData) {
+    return null
+  }
+
   console.log(summaryData)
-  const completedGoals = summaryData.completed
+
+  const firstDayOfWeek = dayjs().startOf('week').format('D MMM')
+  const lastDayOfWeek = dayjs().endOf('week').format('D MMM')
+
+  const percentageOfCompletedGoals = Math.round(
+    (summaryData.completed * 100) / summaryData.total
+  )
 
   return (
     <div className="py-10 px-5 max-w-[480px] mx-auto flex flex-col gap-6 h-screen ">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <InOrbitIcon />
-          <span className="text-lg font-medium">5 a 10 de agosto</span>
+          <span className="text-lg font-medium capitalize">
+            {firstDayOfWeek} - {lastDayOfWeek}
+          </span>
         </div>
 
         <DialogTrigger asChild>
@@ -33,50 +132,30 @@ export function Summary({ summaryData }: SummaryProps) {
       </div>
 
       <div className="flex flex-col gap-3">
-        <Progress value={15} max={15}>
-          <ProgressIndicator style={{ width: '50%' }} />
+        <Progress value={5} max={12}>
+          <ProgressIndicator
+            style={{ width: `${percentageOfCompletedGoals}%` }}
+          />
         </Progress>
 
         <div className="flex items-center justify-between text-xs text-zinc-400 ">
           <span>
-            Você completou <span className="text-zinc-100">8</span> de{' '}
-            <span className="text-zinc-100">15</span> metas nessa semana.{' '}
+            Você completou{' '}
+            <span className="text-zinc-100">{summaryData.completed}</span> de{' '}
+            <span className="text-zinc-100">{summaryData.total}</span> metas
+            nessa semana.{' '}
           </span>
-          <span>58%</span>
+          <span>{percentageOfCompletedGoals}%</span>
         </div>
 
         <Separator />
 
-        <div className="flex flex-wrap gap-3">
-          {[
-            { label: 'Estudar' },
-            { label: 'Meditar' },
-            { label: 'Ler 5 páginas' },
-            { label: 'Correr 2km' },
-            { label: 'Estudar' },
-            { label: 'Treino de perna' },
-            { label: 'Treino de braço' },
-            { label: 'Treino de perna' },
-            { label: 'Estudar' },
-            { label: 'Treino de braço' },
-          ]
-            .slice(0, 6)
-            .map(goal => (
-              <OutlineButton
-                key={goal.label.concat(
-                  Math.floor(Math.random() * 1e5).toString()
-                )}
-              >
-                <Plus className="size-4 text-zinc-600" />
-                {goal.label}
-              </OutlineButton>
-            ))}
-        </div>
+        <PendingGoals />
 
         <div className="flex flex-col gap-6">
           <h2 className="text-xl font-medium">Sua semana</h2>
 
-          {completedGoals === 0 ? (
+          {summaryData.completed === 0 ? (
             <>
               <div className="flex flex-col gap-4">
                 <span className="text-zinc-400 ">
@@ -86,65 +165,17 @@ export function Summary({ summaryData }: SummaryProps) {
             </>
           ) : (
             <>
-              <div className="flex flex-col gap-4">
-                <h3 className="font-medium">
-                  Hoje{' '}
-                  <span className="text-zinc-400 text-xs">(10 de Agosto)</span>
-                </h3>{' '}
-                <ul className="flex flex-col gap-3">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-pink-500 cursor-pointer" />
-                    <span className="text-zinc-400 text-sm">
-                      Você completou "<span>Acordar cedo</span>" às
-                      <span>08:13h</span>
-                    </span>
-                    <span className="text-zinc-500 text-sm underline cursor-pointer">
-                      Desfazer
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <h3 className="font-medium">
-                  Ontem{' '}
-                  <span className="text-zinc-400 text-xs">(9 de Agosto)</span>
-                </h3>{' '}
-                <ul className="flex flex-col gap-3">
-                  <li className="flex items-center gap-2">
-                    <Circle className="size-4 text-pink-500 cursor-pointer" />
-                    <span className="text-zinc-400 text-sm">
-                      Você completou "<span>Acordar cedo</span>" às
-                      <span>08:13h</span>
-                    </span>
-                    <span className="text-zinc-500 text-sm underline cursor-pointer">
-                      Desfazer
-                    </span>
-                  </li>
-
-                  <li className="flex items-center gap-2">
-                    <Circle className="size-4 text-pink-500 cursor-pointer" />
-                    <span className="text-zinc-400 text-sm">
-                      Você completou "<span>Acordar cedo</span>" às
-                      <span>08:13h</span>
-                    </span>
-                    <span className="text-zinc-500 text-sm underline cursor-pointer">
-                      Desfazer
-                    </span>
-                  </li>
-
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-pink-500 cursor-pointer" />
-                    <span className="text-zinc-400 text-sm">
-                      Você completou "<span>Acordar cedo</span>" às
-                      <span>08:13h</span>
-                    </span>
-                    <span className="text-zinc-500 text-sm underline cursor-pointer">
-                      Desfazer
-                    </span>
-                  </li>
-                </ul>
-              </div>
+              {Object.entries(summaryData.goalsPerDay).map((entry, index) => {
+                const [date, goals] = entry
+                return (
+                  <DaySummary
+                    key={`${index}__${date}`}
+                    date={date}
+                    goals={goals}
+                    onUndo={console.log}
+                  />
+                )
+              })}
             </>
           )}
         </div>
