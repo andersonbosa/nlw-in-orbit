@@ -6,10 +6,15 @@ import { InOrbitIcon } from '../in-orbit-logo'
 import { Progress, ProgressIndicator } from '../ui/progress-bar'
 import { Separator } from '../ui/separator'
 import { OutlineButton } from '../ui/outline-button'
+import type { SummaryData } from '../../@types'
 
-export function Summary() {
-  // const completedGoals = []
-  const completedGoals = [{}]
+interface SummaryProps {
+  summaryData: SummaryData
+}
+
+export function Summary({ summaryData }: SummaryProps) {
+  console.log(summaryData)
+  const completedGoals = summaryData.completed
 
   return (
     <div className="py-10 px-5 max-w-[480px] mx-auto flex flex-col gap-6 h-screen ">
@@ -71,7 +76,7 @@ export function Summary() {
         <div className="flex flex-col gap-6">
           <h2 className="text-xl font-medium">Sua semana</h2>
 
-          {completedGoals.length === 0 ? (
+          {completedGoals === 0 ? (
             <>
               <div className="flex flex-col gap-4">
                 <span className="text-zinc-400 ">
