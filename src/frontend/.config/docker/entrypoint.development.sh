@@ -16,10 +16,7 @@ ENVIRONMENT: ${NODE_ENV:-development}
 
 EOF
 
-echo "INFO: Running 'npm run db:setup' "
-npm run db:setup
-
 echo "INFO: Running 'npm run start:dev' "
-npm run start:dev
+npm run start:dev -- --host 0.0.0.0 --port ${HTTP_PORT:-8080}
 
 tail -f /dev/null

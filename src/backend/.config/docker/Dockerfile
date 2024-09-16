@@ -20,9 +20,9 @@ FROM nodejs_base AS runner
 ARG _USER=node
 
 WORKDIR /home/node/app
-COPY . .
+COPY --chown=$_USER:docker . .
 RUN npm install
 RUN npm install -g pm2
 
 USER $_USER
-ENTRYPOINT [ "sh", "./.config/docker/entrypoint.development.sh" ]
+ENTRYPOINT [ "sh", "./.config/docker/entrypoint.production.sh" ]

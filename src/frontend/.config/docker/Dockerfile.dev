@@ -20,8 +20,9 @@ FROM nodejs_base AS runner
 ARG _USER=node
 
 WORKDIR /home/node/app
-COPY . .
+COPY --chown=$_USER:docker . .
 RUN npm install
+RUN rm -r node_modules/.vite/deps
 
 USER $_USER
 ENTRYPOINT [ "sh", "./.config/docker/entrypoint.development.sh" ]

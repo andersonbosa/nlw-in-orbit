@@ -20,7 +20,7 @@ FROM nodejs_base AS runner
 ARG _USER=node
 
 WORKDIR /home/node/app
-COPY . .
+COPY --chown=$_USER:docker . .
 RUN npm install
 
 USER $_USER
