@@ -20,11 +20,11 @@ async function seed() {
 
   const startOfWeek = dayjs().startOf('week')
   await dbOrm.insert(goalsCompletions).values([
-    { goalId: addedGoals[0].id, createdAt: startOfWeek.add(1, 'day').toDate() },
-    { goalId: addedGoals[1].id, createdAt: startOfWeek.add(2, 'day').toDate() },
-    { goalId: addedGoals[2].id, createdAt: startOfWeek.add(4, 'day').toDate() },
-    { goalId: addedGoals[3].id, createdAt: startOfWeek.add(7, 'day').toDate() },
-    { goalId: addedGoals[4].id, createdAt: startOfWeek.add(9, 'day').toDate() },
+    { goalId: addedGoals[0].id, createdAt: startOfWeek.add(0, 'day').toDate() },
+    { goalId: addedGoals[1].id, createdAt: startOfWeek.add(1, 'day').toDate() },
+    { goalId: addedGoals[2].id, createdAt: startOfWeek.add(2, 'day').toDate() },
+    { goalId: addedGoals[3].id, createdAt: startOfWeek.add(3, 'day').toDate() },
+    { goalId: addedGoals[4].id, createdAt: startOfWeek.add(4, 'day').toDate() },
   ])
 }
 

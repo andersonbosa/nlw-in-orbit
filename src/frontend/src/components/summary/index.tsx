@@ -1,7 +1,7 @@
 import { DialogTrigger } from '@radix-ui/react-dialog'
 import { CheckCircle2, Circle, Plus } from 'lucide-react'
 
-import type { GoalPerDayType, GoalsPerDayType, SummaryData } from '../../@types'
+import type { GoalPerDayType, SummaryData } from '../../@types'
 import { InOrbitIcon } from '../in-orbit-logo'
 import { Button } from '../ui/button'
 import { Progress, ProgressIndicator } from '../ui/progress-bar'
