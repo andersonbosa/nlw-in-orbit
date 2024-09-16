@@ -1,4 +1,3 @@
-import { DialogTrigger } from '@radix-ui/react-dialog'
 import { CheckCircle2, Circle, Plus } from 'lucide-react'
 
 import type { GoalPerDayType, SummaryData } from '../../@types'
@@ -6,10 +5,12 @@ import { InOrbitIcon } from '../in-orbit-logo'
 import { Button } from '../ui/button'
 import { Progress, ProgressIndicator } from '../ui/progress-bar'
 import { Separator } from '../ui/separator'
+import { DialogTrigger } from '../ui/dialog'
+
+import { PendingGoals } from '../pending-goals'
 
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
-import { PendingGoals } from '../pending-goals'
 
 dayjs.locale(ptBR)
 
