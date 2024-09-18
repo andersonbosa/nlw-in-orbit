@@ -2,8 +2,7 @@ import z from 'zod'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { createGoalCompletionFunction } from '../functions/create-goal-completion.function'
 
-export const createGoalCompletionRoute: FastifyPluginAsyncZod = async (app) => {
-
+export const createGoalCompletionRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/api/goals/get-completions',
     {

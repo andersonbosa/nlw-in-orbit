@@ -1,6 +1,18 @@
 import { pgTable, text, integer, timestamp } from 'drizzle-orm/pg-core'
 import { createId } from '@paralleldrive/cuid2'
 
+export const users = pgTable('users', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  username: text('username').notNull(),
+  email: text('email').notNull(),
+  passwordHash: text('password_hash').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+})
+
 export const goals = pgTable('goals', {
   id: text('id')
     .primaryKey()
@@ -10,6 +22,9 @@ export const goals = pgTable('goals', {
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
     .defaultNow(),
+  userId: text('user_id')
+    .references(() => users.id)
+    .notNull(),
 })
 
 export const goalsCompletions = pgTable('goals_completions', {

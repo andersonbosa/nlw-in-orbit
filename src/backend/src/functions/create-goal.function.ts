@@ -12,7 +12,11 @@ export async function createGoalFunction({
 }: CreateGoalRequest) {
   const insertResult = await dbOrm
     .insert(goals)
-    .values({ title, desiredWeeklyFrequency })
+    .values({
+      userId: '123',
+      title,
+      desiredWeeklyFrequency,
+    })
     .returning()
 
   const goal = insertResult[0]

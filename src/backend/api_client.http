@@ -47,3 +47,32 @@ Content-type: application/json
 ### Function: Get Week summary
 GET http://127.0.0.1:3000/api/summary
 Content-type: application/json
+
+
+### SIGN IN SUCCESS
+POST http://127.0.0.1:3000/api/sign-in
+Content-type: application/json
+
+{
+  "email": "admin@localhost.com",
+  "password": "admin"
+}
+
+### SIGN IN NOT EXIST USER
+POST http://127.0.0.1:3000/api/sign-in
+Content-type: application/json
+
+{
+  "email": "notuser@localhost.com",
+  "password": "asdasdasd"
+}
+
+
+### Function
+POST http://127.0.0.1:3000/api/sign-up
+Content-type: application/json
+
+{
+  "email": "belceune@soshike.md",
+  "password": "Afghanistan"
+}

@@ -11,34 +11,37 @@ import { createGoalRoute } from '../routes/create-goal.route'
 import { getWeekPendingGoalsRoute } from '../routes/get-week-pending-goals.route'
 import { healthcheckRoute } from '../routes/healthcheck.route'
 import { getWeekSummaryRoute } from '../routes/get-week-summary.route'
-
+import { signInRoute } from '../routes/sign-in.route'
+import { signUpRoute } from '../routes/sign-up.route'
 
 const appConfig = {
   logger: {
-    transport: process.env.NODE_ENV !== 'production'
-      ? {
-        target: 'pino-pretty',
-        level: 'debug',
-        options: {
-          translateTime: 'HH:MM:ss Z',
-          ignore: 'pid,hostname'
-        }
-      }
-      : undefined
-  }
+    transport:
+      process.env.NODE_ENV !== 'production'
+        ? {
+            target: 'pino-pretty',
+            level: 'debug',
+            options: {
+              translateTime: 'HH:MM:ss Z',
+              ignore: 'pid,hostname',
+            },
+          }
+        : undefined,
+  },
 }
 
-const app = fastify(appConfig)
-  .withTypeProvider<ZodTypeProvider>()
+const app = fastify(appConfig).withTypeProvider<ZodTypeProvider>()
 
 app.register(fastifyCors, {
-  origin: process.env.HTTP_CORS_POLICY || '*'
+  origin: process.env.HTTP_CORS_POLICY || '*',
 })
 
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 app.register(healthcheckRoute)
+app.register(signInRoute)
+app.register(signUpRoute)
 app.register(createGoalRoute)
 app.register(createGoalCompletionRoute)
 app.register(getWeekPendingGoalsRoute)

@@ -1,65 +1,65 @@
 name: nlw-pocket
 
 services:
-  frontend:
-    build:
-      context: ./../../../frontend
-      dockerfile: .config/docker/Dockerfile.dev
-    # env_file: ./../../../frontend/.config/env/.env
-    environment:
-      - VITE_BACKEND_API_BASE_URL=http://localhost:3000
-      - HTTP_PORT=8080
-      - HTTP_HOST=0.0.0.0
-    ports:
-      - '8080:8080'
-    volumes:
-      - ./../../../frontend:/home/node/app
-      # Anonymous volume to prevent the node_modules from being overwritten in the host:
-      - pocket_frontend_node_modules:/home/node/app/node_modules
-    networks:
-      - pocket-net-dev
-    healthcheck:
-      test: curl "http://$$HTTP_HOST:$$HTTP_PORT/"
-      start_period: '5s'
-      interval: '15s'
-      timeout: '5s'
-      retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 258MB
+  # frontend:
+  #   build:
+  #     context: ./../../../frontend
+  #     dockerfile: .config/docker/Dockerfile.dev
+  #   # env_file: ./../../../frontend/.config/env/.env
+  #   environment:
+  #     - VITE_BACKEND_API_BASE_URL=http://localhost:3000
+  #     - HTTP_PORT=8080
+  #     - HTTP_HOST=0.0.0.0
+  #   ports:
+  #     - '8080:8080'
+  #   volumes:
+  #     - ./../../../frontend:/home/node/app
+  #     # Anonymous volume to prevent the node_modules from being overwritten in the host:
+  #     - pocket_frontend_node_modules:/home/node/app/node_modules
+  #   networks:
+  #     - pocket-net-dev
+  #   healthcheck:
+  #     test: curl "http://$$HTTP_HOST:$$HTTP_PORT/"
+  #     start_period: '5s'
+  #     interval: '15s'
+  #     timeout: '5s'
+  #     retries: 5
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 258MB
 
 
-  backend:
-    build:
-      context: ./../../../backend
-      dockerfile: .config/docker/Dockerfile.dev
-    # env_file: ./../../../backend/.config/env/.env
-    environment:
-      - HTTP_PORT=3000
-      - HTTP_HOST=0.0.0.0
-      - DATABASE_URL=postgresql://docker:docker@postgresql:5432/inorbit
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./../../../backend:/home/node/app
-      # Anonymous volume to prevent the node_modules from being overwritten in the host:
-      - /home/node/app/node_modules
-    networks:
-      - pocket-net-dev
-    depends_on:
-      postgresql:
-        condition: service_healthy
-    healthcheck:
-      test: curl "http://$$HTTP_HOST:$$HTTP_PORT/api/healthcheck"
-      start_period: '5s'
-      interval: '15s'
-      timeout: '5s'
-      retries: 5
-    deploy:
-      resources:
-        limits:
-          memory: 512MB
+  # backend:
+  #   build:
+  #     context: ./../../../backend
+  #     dockerfile: .config/docker/Dockerfile.dev
+  #   # env_file: ./../../../backend/.config/env/.env
+  #   environment:
+  #     - HTTP_PORT=3000
+  #     - HTTP_HOST=0.0.0.0
+  #     - DATABASE_URL=postgresql://docker:docker@postgresql:5432/inorbit
+  #   ports:
+  #     - '3000:3000'
+  #   volumes:
+  #     - ./../../../backend:/home/node/app
+  #     # Anonymous volume to prevent the node_modules from being overwritten in the host:
+  #     - /home/node/app/node_modules
+  #   networks:
+  #     - pocket-net-dev
+  #   depends_on:
+  #     postgresql:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: curl "http://$$HTTP_HOST:$$HTTP_PORT/api/healthcheck"
+  #     start_period: '5s'
+  #     interval: '15s'
+  #     timeout: '5s'
+  #     retries: 5
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 512MB
 
   postgresql:
     image: bitnami/postgresql:13.16.0

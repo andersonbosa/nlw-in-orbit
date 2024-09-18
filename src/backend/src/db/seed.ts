@@ -1,29 +1,43 @@
 import dayjs from 'dayjs'
-import { ptBR } from 'dayjs/locale/pt-br'
+import ptBR from 'dayjs/locale/pt-br'
 dayjs.locale(ptBR)
 
 import { faker } from '@faker-js/faker'
-faker.locale = 'pt_BR'
 
-import { goalsCompletions, goals } from './schema'
+import { goalsCompletions, goals, users } from './schema'
 import { dbOrm, dbClient } from './client'
+import { hashPassword } from '../utils/hash-password.util'
 
 const getRandomMinutes = (): number => {
   return faker.number.int({ min: 10, max: 1000 })
 }
 
-async function seed() {
+async function seed () {
+  console.time('seeding')
   await dbOrm.delete(goalsCompletions)
   await dbOrm.delete(goals)
+  await dbOrm.delete(users)
+
+
+  const usersAdded = await dbOrm
+    .insert(users)
+    .values([
+      {
+        username: 'admin',
+        email: 'admin@localhost.com',
+        passwordHash: await hashPassword('admin'),
+      },
+    ])
+    .returning()
 
   const addedGoals = await dbOrm
     .insert(goals)
     .values([
-      { title: 'Acordar cedo', desiredWeeklyFrequency: 4 },
-      { title: 'Correr', desiredWeeklyFrequency: 3 },
-      { title: 'Treino pesado', desiredWeeklyFrequency: 2 },
-      { title: 'Beber 2L água', desiredWeeklyFrequency: 4 },
-      { title: 'Meditar', desiredWeeklyFrequency: 3 },
+      { userId: usersAdded[0].id, title: 'Acordar cedo', desiredWeeklyFrequency: 4, },
+      { userId: usersAdded[0].id, title: 'Correr', desiredWeeklyFrequency: 3 },
+      { userId: usersAdded[0].id, title: 'Treino pesado', desiredWeeklyFrequency: 2, },
+      { userId: usersAdded[0].id, title: 'Beber 2L água', desiredWeeklyFrequency: 4, },
+      { userId: usersAdded[0].id, title: 'Meditar', desiredWeeklyFrequency: 3 },
     ])
     .returning()
 
@@ -65,6 +79,7 @@ async function seed() {
         .toDate(),
     },
   ])
+  console.timeEnd('seeding')
 }
 
 seed().finally(() => {
