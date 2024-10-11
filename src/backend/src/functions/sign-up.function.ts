@@ -1,23 +1,30 @@
-import { hash } from 'bcrypt'
 import { dbOrm } from '../db/client'
 import { users } from '../db/schema'
+import { hashPassword } from '../utils/hash-password.util'
 
-interface SignUpRequest {
-  email: string
-  password: string
-}
+export namespace SignUpRequest {
+  export interface SignUpInput {
+    username: string
+    email: string
+    password: string
+  }
 
-export async function signUpFunction({ email, password }: SignUpRequest) {
-  const passwordHash = await hash(password, 32)
+  export interface SignUpOutput {}
 
-  // const insertResult = await dbOrm
-  //   .insert(users)
-  //   .values({ email, password: passwordHash })
-  //   .returning()
+  export async function signUpFunction(
+    input: SignUpInput
+  ): Promise<SignUpOutput> {
+    const usersAdded = await dbOrm
+      .insert(users)
+      .values({
+        username: input.username,
+        email: input.email,
+        passwordHash: await hashPassword(input.password),
+      })
+      .returning()
 
-  // const user = insertResult[0]
-
-  return {
-    // user
+    return {
+      user: usersAdded[0],
+    }
   }
 }

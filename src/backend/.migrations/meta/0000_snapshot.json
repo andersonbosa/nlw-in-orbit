@@ -1,5 +1,5 @@
 {
-  "id": "4181c46d-2467-4e70-b62d-7d755c98d161",
+  "id": "a4501765-d426-4f4a-97e7-ef7b642c7b14",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -141,7 +141,15 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "username": {
+          "name": "username",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        }
+      }
     }
   },
   "enums": {},

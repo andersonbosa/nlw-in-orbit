@@ -5,6 +5,7 @@ GET http://127.0.0.1:3000/api/healthcheck
 ### Function: Create Goal 200
 POST http://127.0.0.1:3000/api/goals/create
 Content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJsMXZyczV0M3NhZGszc2Nzbmdla295NjQiLCJpYXQiOjE3MjY2Mjk1NDMsImV4cCI6MTcyNjcxNTk0M30.bRuirJEO1ZMmC889csuwqFdLc1Z1hai25miUZFzFd5o
 
 {
   "title": "Ler 10 páginas",
@@ -73,6 +74,7 @@ POST http://127.0.0.1:3000/api/sign-up
 Content-type: application/json
 
 {
-  "email": "belceune@soshike.md",
-  "password": "Afghanistan"
+  "username": "tokelau",
+  "email": "tokelau@localhost.com",
+  "password": "NigeriaHaitiNiger"
 }

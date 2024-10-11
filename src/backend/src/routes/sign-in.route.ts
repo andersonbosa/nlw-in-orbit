@@ -1,19 +1,19 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import z from 'zod'
+
 import { SignInFunction } from '../functions/sign-in.function'
 
-import { StatusCodes, ReasonPhrases } from 'http-status-codes'
-
-export const signInRoute: FastifyPluginAsyncZod = async (app) => {
+export const signInRoute: FastifyPluginAsyncZod = async app => {
   app.post(
     '/api/sign-in',
     {
       schema: {
         body: z.object({
           email: z.string().email(),
-          password: z.string()//.min(8),
-        })
-      }
+          password: z.string(),
+        }),
+      },
     },
     async (request, reply) => {
       const { email, password } = request.body
@@ -28,7 +28,6 @@ export const signInRoute: FastifyPluginAsyncZod = async (app) => {
         }
         throw err
       }
-
     }
   )
 }

@@ -7,12 +7,12 @@ import { env } from '../env'
 import jwt from 'jsonwebtoken'
 
 export namespace SignInFunction {
-  export interface SignInRequest {
+  export interface SignInInput {
     email: string
     password: string
   }
 
-  export interface SignInResponse {
+  export interface SignInOutput {
     token: string
   }
 
@@ -23,7 +23,10 @@ export namespace SignInFunction {
     }
   }
 
-  export async function signInFunction ({ email, password }: SignInRequest): Promise<SignInResponse> {
+  export async function signInFunction({
+    email,
+    password,
+  }: SignInInput): Promise<SignInOutput> {
     const queryResult = await dbOrm
       .select()
       .from(users)
@@ -35,11 +38,12 @@ export namespace SignInFunction {
       throw new InvalidCredentialsError()
     }
 
-    const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, { expiresIn: '24h' })
+    const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, {
+      expiresIn: '24h',
+    })
+
     return {
-      token
+      token,
     }
   }
-
-
 }

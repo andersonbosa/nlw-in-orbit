@@ -12,31 +12,40 @@ const getRandomMinutes = (): number => {
   return faker.number.int({ min: 10, max: 1000 })
 }
 
-async function seed () {
-  console.time('seeding')
+async function seed() {
+  console.time('TIME_TO_SEED')
   await dbOrm.delete(goalsCompletions)
   await dbOrm.delete(goals)
   await dbOrm.delete(users)
 
-
   const usersAdded = await dbOrm
     .insert(users)
-    .values([
-      {
-        username: 'admin',
-        email: 'admin@localhost.com',
-        passwordHash: await hashPassword('admin'),
-      },
-    ])
+    .values({
+      username: 'admin',
+      email: 'admin@localhost.com',
+      passwordHash: await hashPassword('admin'),
+    })
     .returning()
 
   const addedGoals = await dbOrm
     .insert(goals)
     .values([
-      { userId: usersAdded[0].id, title: 'Acordar cedo', desiredWeeklyFrequency: 4, },
+      {
+        userId: usersAdded[0].id,
+        title: 'Acordar cedo',
+        desiredWeeklyFrequency: 4,
+      },
       { userId: usersAdded[0].id, title: 'Correr', desiredWeeklyFrequency: 3 },
-      { userId: usersAdded[0].id, title: 'Treino pesado', desiredWeeklyFrequency: 2, },
-      { userId: usersAdded[0].id, title: 'Beber 2L água', desiredWeeklyFrequency: 4, },
+      {
+        userId: usersAdded[0].id,
+        title: 'Treino pesado',
+        desiredWeeklyFrequency: 2,
+      },
+      {
+        userId: usersAdded[0].id,
+        title: 'Beber 2L água',
+        desiredWeeklyFrequency: 4,
+      },
       { userId: usersAdded[0].id, title: 'Meditar', desiredWeeklyFrequency: 3 },
     ])
     .returning()
@@ -79,7 +88,7 @@ async function seed () {
         .toDate(),
     },
   ])
-  console.timeEnd('seeding')
+  console.timeEnd('TIME_TO_SEED')
 }
 
 seed().finally(() => {

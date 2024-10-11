@@ -1,5 +1,5 @@
-import fastify from 'fastify'
 import fastifyCors from '@fastify/cors'
+import fastify from 'fastify'
 import {
   type ZodTypeProvider,
   serializerCompiler,
@@ -9,8 +9,8 @@ import {
 import { createGoalCompletionRoute } from '../routes/create-goal-completion.route'
 import { createGoalRoute } from '../routes/create-goal.route'
 import { getWeekPendingGoalsRoute } from '../routes/get-week-pending-goals.route'
-import { healthcheckRoute } from '../routes/healthcheck.route'
 import { getWeekSummaryRoute } from '../routes/get-week-summary.route'
+import { healthcheckRoute } from '../routes/healthcheck.route'
 import { signInRoute } from '../routes/sign-in.route'
 import { signUpRoute } from '../routes/sign-up.route'
 

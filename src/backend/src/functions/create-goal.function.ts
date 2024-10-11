@@ -1,19 +1,20 @@
 import { dbOrm } from '../db/client'
 import { goals } from '../db/schema'
 
-interface CreateGoalRequest {
+interface CreateGoalInput {
+  userId: string
   title: string
   desiredWeeklyFrequency: number
 }
+interface CreateGoalOutput {}
 
-export async function createGoalFunction({
-  title,
-  desiredWeeklyFrequency,
-}: CreateGoalRequest) {
+export async function createGoalFunction(input: CreateGoalInput) {
+  const { userId, title, desiredWeeklyFrequency } = input
+
   const insertResult = await dbOrm
     .insert(goals)
     .values({
-      userId: '123',
+      userId,
       title,
       desiredWeeklyFrequency,
     })
